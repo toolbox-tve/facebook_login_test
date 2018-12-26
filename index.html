@@ -1,0 +1,61 @@
+<html>
+<head>
+<script>
+    function statusChangeCallback() {
+        FB.getLoginStatus(function(response) {
+            console.log("login status: ", response.status);
+
+            window.login_status.innerText = response.status;
+
+            FB.api('/me', {fields: 'id,name,email'}, function(response) {
+                window.user_id.innerText = response.id;
+                window.user_name.innerText = response.name;
+                window.email.innerText = response.email;
+            });
+
+            //document.write("login status: ", response.status);
+            //statusChangeCallback(response);
+        });
+
+    };
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '2132050760442811',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v3.2'
+    });
+      
+    FB.AppEvents.logPageView();   
+
+    statusChangeCallback();
+  };
+
+
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }  
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>    
+</head>
+<body>
+    <b>Login Status:</b> <p id="login_status"></p>
+    <b>User-id:</b> <p id="user_id"></p>
+    <b>Name:</b> <p id="user_name"></p>
+    <b>E-mail:</b> <p id="email"></p>
+    <fb:login-button 
+      scope="public_profile,email"
+      onlogin="checkLoginState();">
+    </fb:login-button>
+</body>
+</html>
