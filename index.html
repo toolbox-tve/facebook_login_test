@@ -9,6 +9,8 @@
             window.access_token.innerText = response.authResponse.accessToken;
 
             FB.api('/me', {fields: 'id,name,email'}, function(response) {
+                window.user_picture.src = "http://graph.facebook.com/"+response.id+"/picture";
+
                 window.user_id.innerText = response.id;
                 window.user_name.innerText = response.name;
                 window.email.innerText = response.email;
@@ -55,6 +57,7 @@
     <b>Access Token:</b> <p id="access_token"></p>
     <b>Name:</b> <p id="user_name"></p>
     <b>E-mail:</b> <p id="email"></p>
+    <b>User Picture:</b> <p><img id="user_picture"/></p>
     <fb:login-button 
       scope="public_profile,email"
       onlogin="checkLoginState();">
